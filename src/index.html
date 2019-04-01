@@ -1,0 +1,718 @@
+<html class="js-enabled">
+<head>
+    <title>Fast FALA</title>
+    <link href="main.css" rel="stylesheet">
+    <link href="mapbox-gl.css" rel="stylesheet">
+    <script src='fastfala.min.js'></script>
+
+    <style type="text/css">
+        .userLocationPoint {
+            background-color: white;
+            width: 12px;
+            height: 12px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: rgb(69, 116, 222);
+            border-radius: 50%;
+        }
+
+        .customMarker {
+            width: 0;
+            height: 0;
+        }
+
+        .customMarker span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            width: 32px;
+            height: 32px;
+            color: #fff;
+            background: #D55050;
+            border: solid 2px;
+            border-radius: 0 70% 70%;
+            box-shadow: 0 0 2px #000;
+            cursor: pointer;
+            transform-origin: 0 0;
+            transform: rotateZ(-135deg);
+        }
+
+        .customMarker b {
+            transform: rotateZ(135deg)
+        }
+
+        .mapboxgl-popup {
+            width: 320px;
+        }
+
+        .mapboxgl-popup-content {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 20px 15px;
+        }
+
+        .mapboxgl-popup-content h3 {
+            margin: 5px 0 10px 0 !important;
+        }
+
+        .mapboxgl-popup-content hr {
+            margin: 15px 0 0 0;
+            border: 1px solid #e9e9ea;
+        }
+
+        .results-nav {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body style="position: relative; min-height: 100%; top: 0px;">
+
+<header>
+    <div id="global-cookie-message">
+        <div class="container">
+            <p>GOV.UK uses cookies to make the site simpler. <a href="https://www.gov.uk/help/cookies">Find out more
+                about
+                cookies</a></p>
+        </div>
+    </div>
+    <div class="global-header">
+        <div class="container">
+            <div class="skip-link">
+                <a href="#content">Skip to main content</a>
+            </div>
+
+            <div class="header-branding">
+                <a href="https://www.gov.uk" title="Go to the GOV.UK homepage" class="header-logo">
+                    <img src="/static/images/crown-logo-black-2x.png" width="35" alt="">
+                    <span>GOV.UK</span>
+                </a>
+            </div>
+
+            <a href="#proposition-links" class="header-menu-toggle"></a>
+
+            <div class="header-proposition">
+
+                <a href="/" class="proposition-name">Find a legal aid adviser or family mediator</a>
+
+            </div>
+            <div class="header-bar"></div>
+        </div>
+    </div>
+
+    <div class="global-subheader">
+        <div class="container">
+            <div class="global-subheader container">
+                <div class="subheader-item phase-banner">
+                    <span class="phase-tag phase-tag-alpha">ALPHA</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<main id="content" class="main-content" role="main">
+    <div class="container">
+        <div id="google_translate_element">
+            <div class="skiptranslate goog-te-gadget" dir="ltr" style="">
+                <div id=":0.targetLanguage" style="display: inline;"><select class="goog-te-combo"
+                                                                             aria-label="Language Translate Widget">
+                    <option value="">Select Language</option>
+                    <option value="af">Afrikaans</option>
+                    <option value="sq">Albanian</option>
+                    <option value="am">Amharic</option>
+                    <option value="ar">Arabic</option>
+                    <option value="hy">Armenian</option>
+                    <option value="az">Azerbaijani</option>
+                    <option value="eu">Basque</option>
+                    <option value="be">Belarusian</option>
+                    <option value="bn">Bengali</option>
+                    <option value="bs">Bosnian</option>
+                    <option value="bg">Bulgarian</option>
+                    <option value="ca">Catalan</option>
+                    <option value="ceb">Cebuano</option>
+                    <option value="ny">Chichewa</option>
+                    <option value="zh-CN">Chinese (Simplified)</option>
+                    <option value="zh-TW">Chinese (Traditional)</option>
+                    <option value="co">Corsican</option>
+                    <option value="hr">Croatian</option>
+                    <option value="cs">Czech</option>
+                    <option value="da">Danish</option>
+                    <option value="nl">Dutch</option>
+                    <option value="eo">Esperanto</option>
+                    <option value="et">Estonian</option>
+                    <option value="tl">Filipino</option>
+                    <option value="fi">Finnish</option>
+                    <option value="fr">French</option>
+                    <option value="fy">Frisian</option>
+                    <option value="gl">Galician</option>
+                    <option value="ka">Georgian</option>
+                    <option value="de">German</option>
+                    <option value="el">Greek</option>
+                    <option value="gu">Gujarati</option>
+                    <option value="ht">Haitian Creole</option>
+                    <option value="ha">Hausa</option>
+                    <option value="haw">Hawaiian</option>
+                    <option value="iw">Hebrew</option>
+                    <option value="hi">Hindi</option>
+                    <option value="hmn">Hmong</option>
+                    <option value="hu">Hungarian</option>
+                    <option value="is">Icelandic</option>
+                    <option value="ig">Igbo</option>
+                    <option value="id">Indonesian</option>
+                    <option value="ga">Irish</option>
+                    <option value="it">Italian</option>
+                    <option value="ja">Japanese</option>
+                    <option value="jw">Javanese</option>
+                    <option value="kn">Kannada</option>
+                    <option value="kk">Kazakh</option>
+                    <option value="km">Khmer</option>
+                    <option value="ko">Korean</option>
+                    <option value="ku">Kurdish (Kurmanji)</option>
+                    <option value="ky">Kyrgyz</option>
+                    <option value="lo">Lao</option>
+                    <option value="la">Latin</option>
+                    <option value="lv">Latvian</option>
+                    <option value="lt">Lithuanian</option>
+                    <option value="lb">Luxembourgish</option>
+                    <option value="mk">Macedonian</option>
+                    <option value="mg">Malagasy</option>
+                    <option value="ms">Malay</option>
+                    <option value="ml">Malayalam</option>
+                    <option value="mt">Maltese</option>
+                    <option value="mi">Maori</option>
+                    <option value="mr">Marathi</option>
+                    <option value="mn">Mongolian</option>
+                    <option value="my">Myanmar (Burmese)</option>
+                    <option value="ne">Nepali</option>
+                    <option value="no">Norwegian</option>
+                    <option value="ps">Pashto</option>
+                    <option value="fa">Persian</option>
+                    <option value="pl">Polish</option>
+                    <option value="pt">Portuguese</option>
+                    <option value="pa">Punjabi</option>
+                    <option value="ro">Romanian</option>
+                    <option value="ru">Russian</option>
+                    <option value="sm">Samoan</option>
+                    <option value="gd">Scots Gaelic</option>
+                    <option value="sr">Serbian</option>
+                    <option value="st">Sesotho</option>
+                    <option value="sn">Shona</option>
+                    <option value="sd">Sindhi</option>
+                    <option value="si">Sinhala</option>
+                    <option value="sk">Slovak</option>
+                    <option value="sl">Slovenian</option>
+                    <option value="so">Somali</option>
+                    <option value="es">Spanish</option>
+                    <option value="su">Sundanese</option>
+                    <option value="sw">Swahili</option>
+                    <option value="sv">Swedish</option>
+                    <option value="tg">Tajik</option>
+                    <option value="ta">Tamil</option>
+                    <option value="te">Telugu</option>
+                    <option value="th">Thai</option>
+                    <option value="tr">Turkish</option>
+                    <option value="uk">Ukrainian</option>
+                    <option value="ur">Urdu</option>
+                    <option value="uz">Uzbek</option>
+                    <option value="vi">Vietnamese</option>
+                    <option value="cy">Welsh</option>
+                    <option value="xh">Xhosa</option>
+                    <option value="yi">Yiddish</option>
+                    <option value="yo">Yoruba</option>
+                    <option value="zu">Zulu</option>
+                </select></div>&nbsp;&nbsp;Powered by <span style="white-space:nowrap"><a class="goog-logo-link"
+                                                                                          href="https://translate.google.com"
+                                                                                          target="_blank"><img
+                    src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png"
+                    width="37px" height="14px" style="padding-right: 3px" alt="Google Translate">Translate</a></span>
+            </div>
+        </div>
+        <header class="page-header">
+            <h1>
+                Find a legal aid adviser <span>or family mediator</span>
+            </h1>
+            <p class="lede">Search for a legal adviser or family mediator with a legal aid contract in England and
+                Wales.</p>
+        </header>
+        <div class="find-legal-adviser" id="fast-fala">
+            <section v-show="userLocation || orgFilter" class="legal-adviser-results">
+                <p class="results-summary">
+                    {{ filteredCount }} results in total. <span
+                        v-if="latestSearchInput">Showing 10 results near <strong>{{ latestSearchInput }}</strong></span>
+                </p>
+                <div class="search-results-container" style="overflow: hidden; position: relative;">
+                    <div id="mapContainer" class="map" style="position: relative;">
+                        <div id="map" style="position: absolute; height: 100%; width: 100%; top: 0; left: 0;"></div>
+                    </div>
+
+                    <div class="search-results">
+                        <div class="search-results-list" tabindex="-1" style="height: 100%;">
+                            <ul class="org-list">
+                                <li v-for="(provider,index) in sortedProvidersPage"
+                                    class="org-list-item vcard s-expanded">
+                                    <a class="org-summary" aria-expanded="true" href="#">
+                                        <h3 class="org-title">
+                                            <span class="marker">{{ index + 1 }}</span>
+                                            <span class="fn org">{{ provider.name }}</span>
+                                        </h3>
+
+                                    </a>
+                                    <div class="org-details" tabindex="-1">
+
+                                        <p class="org-address">
+                                            <span class="sr-only">Address:</span>
+                                            <span class="adr">
+                                        <span class="street-address">{{ provider.address }}</span>
+                                    </span>
+                                        </p>
+                                        <p>
+                                            <span>Helpline:</span>
+                                            <span class="tel">{{ provider.tel }}</span>
+                                        </p>
+
+                                        <div class="org-categories" role="list">
+                                            <div class="sr-only">Categories of law</div>
+                                            <span v-for="category in provider.categories" class="org-category"
+                                                  role="listitem">
+                                        {{ category }}
+                                    </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <nav class="search-results-pagination" style="position: absolute; bottom: 0; width: 100%;">
+                                <ul>
+                                    <li v-if="resultsPage > 0" class="results-nav results-nav-prev">
+                                        <a v-on:click="resultsPage -= 1">
+                                            Previous
+                                        </a>
+                                    </li>
+
+                                    <li class="results-nav results-nav-next">
+                                        <a v-on:click="resultsPage += 1">
+                                            Next
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="legal-adviser-search">
+                <form v-on:submit.prevent="lookupPostcode">
+                    <div class="form-group-plain" id="field-postcode">
+                        <div class="form-group-label">
+                            <label for="id_postcode">Enter postcode, town or city</label>
+                        </div>
+
+                        <div class="form-row ">
+                            <input class="form-control" id="id_postcode" maxlength="30" name="postcode"
+                                   placeholder="e.g. SW1H 9AJ" type="text" v-model="searchInput">
+                            <button type="submit" class="button" id="searchButton" name="search">Search</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group filters">
+                        <div class="form-group-label">
+                            <label>Filter by</label>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group-plain" id="field-name">
+                                <div class="form-group-label">
+                                    <label for="id_name">Organisation name</label>
+                                </div>
+
+                                <div class="form-row ">
+                                    <input class="form-control" id="id_name" maxlength="100" name="name"
+                                           placeholder="e.g. Winthorpes" type="text" v-model="orgFilter">
+                                    <button type="submit" class="button button-secondary" name="filter">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-row">
+                            <div class="column-half">
+                                <fieldset class="form-group fieldset-group">
+                                    <legend class="form-group-label">
+                                        Organisation type
+                                    </legend>
+                                    <ul class="form-option-list">
+
+                                        <li><label for="id_type_0"><input id="id_type_0" name="type"
+                                                                          type="checkbox"
+                                                                          value="Charity or Voluntary Org">
+                                            Charity or Voluntary Organisations</label></li>
+
+                                        <li><label for="id_type_1"><input id="id_type_1" name="type" type="checkbox"
+                                                                          value="Mediation"> Mediation Service</label>
+                                        </li>
+
+                                        <li><label for="id_type_2"><input id="id_type_2" name="type" type="checkbox"
+                                                                          value="Private Company"> Private
+                                            Company</label></li>
+
+                                        <li><label for="id_type_3"><input id="id_type_3" name="type" type="checkbox"
+                                                                          value="Solicitor"> Solicitor</label></li>
+
+                                    </ul>
+                                </fieldset>
+                            </div>
+                            <div class="column-half">
+                                <fieldset class="form-group fieldset-group">
+                                    <legend class="form-group-label">
+                                        Category
+                                    </legend>
+                                    <ul class="form-option-list">
+                                        <li>
+                                            <label>
+                                                <input type="checkbox"
+                                                       v-model="categories['Claims against Public Authorities']"
+                                                       true-value="true" false-value="false">
+                                                Claims Against Public Authorities
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Clinical Negligence']"
+                                                       true-value="true" false-value="false">
+                                                Clinical negligence
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Community Care']"
+                                                       true-value="true" false-value="false">
+                                                Community care
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Crime']" true-value="true"
+                                                       false-value="false">
+                                                Crime
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Debt']" true-value="true"
+                                                       false-value="false">
+                                                Debt
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Family']" true-value="true"
+                                                       false-value="false">
+                                                Family
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Mediation']"
+                                                       true-value="true" false-value="false">
+                                                Family mediation
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Housing']" true-value="true"
+                                                       false-value="false">
+                                                Housing
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Immigration Asylum']"
+                                                       true-value="true" false-value="false">
+                                                Immigration or asylum
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Mental Health']"
+                                                       true-value="true" false-value="false">
+                                                Mental health
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Prison Law']"
+                                                       true-value="true" false-value="false">
+                                                Prison law
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Public Law']"
+                                                       true-value="true" false-value="false">
+                                                Public law
+                                            </label>
+                                        </li>
+
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" v-model="categories['Welfare Benefits']"
+                                                       true-value="true" false-value="false">
+                                                Welfare benefits
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <ul style="display:none">
+                <li v-for="(provider,index) in sortedProviders">{{ provider.name}}</li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<footer class="global-footer">
+    <div class="container">
+        <div class="support-links">
+            <h2 class="u-vh">Support links</h2>
+            <ul>
+                <li><a href="https://www.gov.uk/help/cookies">Cookies</a></li>
+                <li><a href="https://www.gov.uk/government/organisations/legal-aid-agency">Legal Aid Agency</a></li>
+                <li>
+                    Built by
+                    <a href="https://mojdigital.blog.gov.uk/">
+                        <abbr title="Ministry of Justice">MOJ</abbr> Digital
+                    </a>
+                </li>
+            </ul>
+            <div class="open-government-licence">
+                <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" class="ogl-logo">
+                    Open Government Licence
+                </a>
+                All content is available under the
+                <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government
+                    Licence v3.0</a>
+                except where otherwise stated
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<script>
+    const providersUrl = "$providers_json";
+    const postcodeLookupUrl = "https://api.postcodes.io/postcodes/";
+    const placeLookupUrl = "https://api.postcodes.io/places?limit=1&q=";
+    _.templateSettings = {interpolate: /\{\{(.+?)\}\}/g};
+
+    new Vue({
+        el: '#fast-fala',
+        data: {
+            providers: null,
+            searchInput: '',
+            latestSearchInput: '',
+            userLocation: null,
+            userLocationPoint: null,
+            map: null,
+            markers: [],
+            categories: {},
+            selectedCategories: [],
+            orgFilter: '',
+            resultsPage: 0
+        },
+        created: function () {
+            this.getProviders();
+            // this.userLocation = turf.point([-0.141588, 51.501009]);
+        },
+        mounted: function () {
+            mapboxgl.accessToken = 'undefined';
+            this.map = new mapboxgl.Map({
+                container: 'map',
+                style: 'https://storage.mapstack.org/styles/mapstyle-91c66c0c-95e8-9e507968.json',
+                center: [-2, 54.7],
+                zoom: 6,
+                maxZoom: 18
+            });
+        },
+        updated: function () {
+            if(this.latestSearchInput || this.orgFilter) {
+                this.map.resize();
+                this.zoomToFitMarkers();
+            }
+        },
+        watch: {
+            sortedProvidersPage: function (newProvidersPage, oldProvidersPage) {
+                if (this.map) {
+                    this.paintUserLocationPoint();
+                    this.clearMarkers();
+                    this.addMarkers(newProvidersPage);
+                    this.zoomToFitMarkers();
+                }
+            },
+            userLocation: function (newLocation, oldLocation) {
+                this.paintUserLocationPoint(newLocation);
+            },
+            categories: {
+                handler(newCategories, oldCategories) {
+                    this.selectedCategories = [];
+                    for (let category in newCategories) {
+                        if (newCategories[category] == "true") {
+                            this.selectedCategories.push(category);
+                        }
+                    }
+                    this.scrollToResults()
+                },
+                deep: true,
+            },
+        },
+        computed: {
+            sortedProviders: function () {
+                if (this.filteredProviders) {
+                    this.scrollToResults();
+                    if (this.userLocation) {
+                        return _.sortBy(this.filteredProviders, function (provider) {
+                            if (provider.lngLat) {
+                                return turf.distance(this.userLocation, turf.point(provider.lngLat), {})
+                            }
+                        }.bind(this))
+                    }
+                    return this.filteredProviders;
+                }
+            },
+            sortedProvidersPage: function () {
+                const pageSize = 10;
+                let start = this.resultsPage * pageSize;
+                let end = start + pageSize;
+                if (this.sortedProviders) {
+                    return this.sortedProviders.slice(start, end);
+                }
+            },
+            filteredProviders: function () {
+                let result = this.providers;
+                if (this.selectedCategories.length > 0) {
+                    result = _.filter(result, function (provider) {
+                        return _.intersection(provider.categories, this.selectedCategories).length > 0
+                    }.bind(this));
+                }
+                if (this.orgFilter.length > 0) {
+                    result = _.filter(result, function (provider) {
+                        return provider.name.includes(this.orgFilter)
+                    }.bind(this));
+                }
+                return result;
+            },
+            filteredCount: function () {
+                return _.size(this.filteredProviders);
+            },
+        },
+        methods: {
+            getProviders: function () {
+                axios.get(providersUrl)
+                    .then(function (response) {
+                        this.providers = response.data;
+                    }.bind(this))
+                    .catch(function (error) {
+                        console.error(error)
+                    }.bind(this));
+            },
+            lookupPostcode: function () {
+                this.latestSearchInput = this.searchInput;
+                this.resultsPage = 0;
+                axios.get(postcodeLookupUrl + this.searchInput)
+                    .then(function (response) {
+                        let result = response.data.result;
+                        if (result) {
+                            this.userLocation = turf.point([result.longitude, result.latitude]);
+                        } else {
+                            this.lookupPlace();
+                        }
+                    }.bind(this))
+                    .catch(function (error) {
+                        this.lookupPlace();
+                    }.bind(this))
+            },
+            lookupPlace: function () {
+                axios.get(placeLookupUrl + this.searchInput)
+                    .then(function (response) {
+                        let result = response.data.result[0];
+                        if (result) {
+                            this.userLocation = turf.point([result.longitude, result.latitude]);
+                        } else {
+                            console.error("No result found"); // TODO user display
+                        }
+                    }.bind(this))
+                    .catch(function (error) {
+                        console.error(error);
+                    }.bind(this))
+            },
+            paintUserLocationPoint: function () {
+                if (this.userLocationPoint) {
+                    this.userLocationPoint.remove();
+                }
+                let el = document.createElement('div');
+                el.className = 'userLocationPoint';
+
+                this.userLocationPoint = new mapboxgl.Marker(el)
+                    .setLngLat(this.userLocation.geometry.coordinates)
+                    .addTo(this.map);
+            },
+            clearMarkers: function () {
+                _.each(this.markers, function (marker) {
+                    marker.remove()
+                });
+                this.markers = [];
+            },
+            addMarkers: function (providers) {
+                _.each(providers, function (provider, index) {
+                    let markerEl = document.createElement('div');
+                    markerEl.className = 'customMarker';
+                    markerEl.innerHTML = '<span><b>' + (index + 1) + '</b></span>';
+                    let popupTemplate = _.template("<h3>{{ name }}</h3>" +
+                        "<p> {{ address }}</p>" +
+                        "<p>Telephone: {{ tel }}</p>" +
+                        "<hr><p> {{ categories }}</p>");
+                    let popupContent = popupTemplate(provider);
+                    let popup = new mapboxgl.Popup({offset: 25})
+                        .setHTML(popupContent);
+                    let newMarker = new mapboxgl.Marker(markerEl)
+                        .setLngLat(provider.lngLat)
+                        .setPopup(popup)
+                        .addTo(this.map);
+                    this.markers.push(newMarker);
+                }.bind(this));
+            },
+            zoomToFitMarkers: function () {
+                if (this.markers.length > 0) {
+                    let bounds = this.markers.reduce(function (bounds, marker) {
+                        return bounds.extend(marker.getLngLat());
+                    }, this.markers[0].getLngLat().toBounds());
+                    this.map.fitBounds(bounds, {padding: 50, linear: true});
+                }
+            },
+            scrollToResults: function () {
+                if (this.userLocation) {
+                    window.scrollTo({
+                        top: document.querySelector('#fast-fala').getBoundingClientRect().top,
+                        behavior: 'smooth'
+                    });
+                }
+            },
+        }
+    })
+</script>
+
+</body>
+</html>
