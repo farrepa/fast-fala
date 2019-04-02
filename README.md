@@ -22,3 +22,18 @@ Subsequently build outside the container and run with
 
     docker run --mount type=bind,source="$(pwd)"/dist,target=/app/dist -it fast_fala python update_website.py
     docker run --mount type=bind,source="$(pwd)"/dist,target=/app/dist -it -p 8080:80 fast_fala
+
+
+## Known issues
+
+- Public datasource does not contain provider websites or organization type
+- Organization type filter unimplemented, with no data to filter on
+- Provider details in list view not yet implemented
+- Missing progress indicator on search
+- Missing "No results found" notice
+
+
+## Unimplemented
+
+- `/terminated_postcodes` lookup on 404s, notification, and outcode logging to highlight service gaps
+- Retained pagination behaviour
