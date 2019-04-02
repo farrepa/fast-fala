@@ -84,16 +84,13 @@
             <div class="header-branding">
                 <a href="https://www.gov.uk" title="Go to the GOV.UK homepage" class="header-logo">
                     <img src="/static/images/crown-logo-black-2x.png" width="35" alt="">
-                    <span>GOV.UK</span>
+                    <span style="text-decoration:line-through;">GOV.UK</span>
                 </a>
             </div>
 
             <a href="#proposition-links" class="header-menu-toggle"></a>
-
             <div class="header-proposition">
-
                 <a href="/" class="proposition-name">Find a legal aid adviser or family mediator</a>
-
             </div>
             <div class="header-bar"></div>
         </div>
@@ -476,10 +473,6 @@
                     </div>
                 </form>
             </div>
-
-            <ul style="display:none">
-                <li v-for="(provider,index) in sortedProviders">{{ provider.name}}</li>
-            </ul>
         </div>
     </div>
 </main>
@@ -487,25 +480,10 @@
 <footer class="global-footer">
     <div class="container">
         <div class="support-links">
-            <h2 class="u-vh">Support links</h2>
-            <ul>
-                <li><a href="https://www.gov.uk/help/cookies">Cookies</a></li>
-                <li><a href="https://www.gov.uk/government/organisations/legal-aid-agency">Legal Aid Agency</a></li>
-                <li>
-                    Built by
-                    <a href="https://mojdigital.blog.gov.uk/">
-                        <abbr title="Ministry of Justice">MOJ</abbr> Digital
-                    </a>
-                </li>
-            </ul>
             <div class="open-government-licence">
-                <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" class="ogl-logo">
-                    Open Government Licence
-                </a>
+                <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" class="ogl-logo">Open Government Licence</a>
                 All content is available under the
-                <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government
-                    Licence v3.0</a>
-                except where otherwise stated
+                <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a> except where otherwise stated
             </div>
 
         </div>
